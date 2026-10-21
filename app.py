@@ -70,10 +70,18 @@ app_mode = st.sidebar.selectbox(
     ["Image Detection", "Real-Time Webcam Feed", "Detection History & Logs"]
 )
 
-# --- MODE 1: IMAGE DETECTION ---
+# --- MODE 1: IMAGE & CAMERA DETECTION ---
 if app_mode == "Image Detection":
-    st.header("Upload an Image for Detection")
-    uploaded_file = st.file_uploader("Choose an image (.jpg, .png, .jpeg)", type=["jpg", "png", "jpeg"])
+    st.header("Waste Detection via Image or Snapshot")
+    
+    input_method = st.radio("Select Input Method", ["Upload Image File", "Capture Photo with Camera"])
+    
+    uploaded_file = None
+    
+    if input_method == "Upload Image File":
+        uploaded_file = st.file_uploader("Choose an image (.jpg, .png, .jpeg)", type=["jpg", "png", "jpeg"])
+    else:
+        uploaded_file = st.camera_input("Take a picture of the waste item")
     
     if uploaded_file is not None:
         # Save temporary image
